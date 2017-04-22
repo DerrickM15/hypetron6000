@@ -1,0 +1,13 @@
+{
+    "options": {
+        "debug": true
+    },
+    "connection": {
+        "reconnect": true
+    },
+    "identity": {
+        "username": "hypetronbot",
+        "password": ""
+    },
+    "channels": ["#derrickmgames"]
+}
