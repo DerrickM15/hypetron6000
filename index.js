@@ -1,5 +1,6 @@
 const tmi = require('tmi.js');
 const express = require('express');
+const skateboard = require('skateboard');
 const options = require('./config.json');
 
 const app = express();
@@ -17,24 +18,33 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
+skateboard({
+    dir: __dirname + '/views',          // default (optional)
+    port : 8080,                         // default (optional)
+    transports: ['polling', 'websocket'] // default (optional)
+    // requestHandler: function(req, res) {} -- fallback request handler
+}, function(stream) {
+    const client = new tmi.client(options);
 
-const client = new tmi.client(options);
+    client.on("chat", function (channel, userstate, message, self) {
+        // Don't listen to my own messages..
+        if (self) return;
 
-client.on("chat", function (channel, userstate, message, self) {
-    // Don't listen to my own messages..
-    if (self) return;
-
-    if (userstate['emotes']) {
-        let emotesNum = 0;
-        USEmotesObj = userstate['emotes'];
-        for (let key in USEmotesObj) {
-            if (USEmotesObj.hasOwnProperty(key)) {
-                emotesNum += USEmotesObj[key].length;
+        if (userstate['emotes']) {
+            let emotesNum = 0;
+            USEmotesObj = userstate['emotes'];
+            for (let key in USEmotesObj) {
+                if (USEmotesObj.hasOwnProperty(key)) {
+                    emotesNum += USEmotesObj[key].length;
+                }
             }
-            console.log(emotesNum);
+            stream.write(emotesNum);
         }
-    }
+    });
+    // Connect the client to the server..
+    client.connect();
 });
 
-// Connect the client to the server..
-client.connect();
+
+
+
