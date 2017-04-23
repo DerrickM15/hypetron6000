@@ -7,7 +7,7 @@
     },
     "identity": {
         "username": "hypetronbot",
-        "password": ""
+        "password": "oauth:k3qf2kptgsjkqoxreau6gb4ya2h8ul"
     },
     "channels": ["#derrickmgames"]
 }
