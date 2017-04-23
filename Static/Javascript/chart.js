@@ -2,10 +2,10 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-
+        var hype = 50 //pull information from websocket magic
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['Hypetron', 0],//0 === starting value
+          ['Hypetron', hype],//0 === starting value
         ]);
 
         var options = {
@@ -21,7 +21,8 @@
         chart.draw(data, options);
 
         setInterval(function() {
-          data.setValue(0, 1, 0 + Math.round(emotesNum));//60 * Math.round replaced with emotesNum /2?
+          hype = hype - 1;
+          data.setValue(0, 1, hype);//60 * Math.round replaced with emotesNum /2?
           chart.draw(data, options);
         }, 1000);//update interval
       }
