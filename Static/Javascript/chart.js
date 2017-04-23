@@ -24,7 +24,7 @@
           hype = hype - 1;
           if (hype < 1) {
             hype = 0;
-          }         
+          }       
           data.setValue(0, 1, hype);//60 * Math.round replaced with emotesNum /2?
           chart.draw(data, options);
         }, 1000);//update interval
